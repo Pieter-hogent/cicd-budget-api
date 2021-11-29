@@ -12,14 +12,14 @@ const CORS_MAX_AGE = config.get('cors.maxAge');
 const LOG_LEVEL = config.get('log.level');
 const LOG_DISABLED = config.get('log.disabled');
 
-module.exports = async function createServer () {
+module.exports = async function createServer() {
 	initializeLogger({
 		level: LOG_LEVEL,
 		disabled: LOG_DISABLED,
 		isProduction: NODE_ENV === 'production',
 		defaultMeta: { NODE_ENV },
 	});
-	
+
 	await initializeData();
 
 	const app = new Koa();
@@ -38,32 +38,33 @@ module.exports = async function createServer () {
 			maxAge: CORS_MAX_AGE,
 		})
 	);
-	
+
 	const logger = getLogger();
-	
+
 	app.use(bodyParser());
-	
+
 	installRest(app);
 
-    return {
-        getApp(){
-            return app;
-        },
+	return {
+		getApp() {
+			return app;
+		},
 
-        start(){
-            return new Promise((resolve) => {
-            app.listen(9000);
-            logger.info(`🚀 Server listening on http://localhost:9000`);
-            resolve()
-            })
-        },
+		start() {
+			return new Promise((resolve) => {
+				const port = process.env.PORT || 9000;
+				app.listen(port);
+				logger.info(`🚀 Server listening on http://localhost:${port}`);
+				resolve();
+			});
+		},
 
-        async stop(){{
-            app.removeAllListeners();
-            await shutdownData();
-            getLogger().info('Goodbye');
-        }}
-        }
-    }
-	
-  
+		async stop() {
+			{
+				app.removeAllListeners();
+				await shutdownData();
+				getLogger().info('Goodbye');
+			}
+		},
+	};
+};

@@ -5,9 +5,8 @@ module.exports = {
 	},
 	cors: {
 		origins: [
-			'http://localhost:3000',
-			'https://pieter-hogent.github.io/frontendweb-budget/',
-			'https://pieter-hogent.github.io/',
+			'http://localhost:3000',		
+			'https://pieter-hogent.github.io',
 		],
 		maxAge: 3 * 60 * 60, // 3h in seconds
 	},

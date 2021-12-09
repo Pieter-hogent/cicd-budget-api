@@ -4,10 +4,7 @@ module.exports = {
 		disabled: false,
 	},
 	cors: {
-		origins: [
-			'http://localhost:3000',		
-			'https://pieter-hogent.github.io',
-		],
+		origins: ['http://localhost:3000', 'https://pieter-hogent.github.io'],
 		maxAge: 3 * 60 * 60, // 3h in seconds
 	},
 	database: {

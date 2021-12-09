@@ -3,9 +3,10 @@ const transactionService = require('../service/transaction');
 const { requireAuthentication } = require('../core/auth');
 
 const getAllTransactions = async (ctx) => {
-	const limit =  ctx.query.limit && Number(ctx.query.limit);
-    const offset =  ctx.query.offset && Number(ctx.query.offset);
+	const limit = ctx.query.limit && Number(ctx.query.limit);
+	const offset = ctx.query.offset && Number(ctx.query.offset);
 	ctx.body = await transactionService.getAll(limit, offset);
+	ctx.status = 200;
 };
 
 const createTransaction = async (ctx) => {
@@ -15,7 +16,7 @@ const createTransaction = async (ctx) => {
 		date: new Date(ctx.request.body.date),
 	});
 	ctx.body = newTransaction;
-	ctx.status=201;
+	ctx.status = 201;
 };
 
 const getTransactionById = async (ctx) => {
